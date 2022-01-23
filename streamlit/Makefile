@@ -9,13 +9,7 @@ format:
 	black *.py
 
 run:
-	python main.py
-
-run-uvicorn:
-	uvicorn main:app --reload
-
-killweb:
-	sudo killall uvicorn
+	python UI_app.py
 
 lint:
 	pylint --disable=R,C main.py
