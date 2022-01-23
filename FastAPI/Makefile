@@ -18,6 +18,6 @@ killweb:
 	sudo killall uvicorn
 
 lint:
-	pylint --disable=R,C main.py
+	python -m pylint --errors-only main.py
 
 all: install lint test
