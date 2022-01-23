@@ -3,7 +3,6 @@ from fastapi import FastAPI, Request
 import uvicorn
 import json
 
-
 application = FastAPI()
 
 
@@ -23,4 +22,4 @@ def root(req: Request):
 
 
 if __name__ == "__main__":
-    uvicorn.run(application, port=8080, host="0.0.0.0")
+uvicorn.run(application, port=8080, host="0.0.0.0")

@@ -6,7 +6,7 @@ install:
 # 	python -m pytest -vv test_main.py
 
 format:
-	black *.py
+	black main.py
 
 run:
 	python main.py

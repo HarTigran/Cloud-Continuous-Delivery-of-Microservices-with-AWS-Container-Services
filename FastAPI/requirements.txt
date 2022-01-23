@@ -1,3 +1,5 @@
 requests
 fastapi
 uvicorn
+pylint
+black
