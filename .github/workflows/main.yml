@@ -19,6 +19,7 @@ jobs:
       - name: Set up Python 3.9
         uses: actions/setup-python@v1
         with:
+          path: Project_01_22/FastAPI/
           python-version: 3.9
       - name: Install dependencies
         run: |
