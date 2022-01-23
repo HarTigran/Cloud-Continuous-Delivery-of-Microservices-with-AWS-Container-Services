@@ -19,22 +19,24 @@ jobs:
       - name: Set up Python 3.9
         uses: actions/setup-python@v1
         with:
-          path: Project_01_22/FastAPI/
           python-version: 3.9
       - name: Install dependencies
+        working-directory: ./Project_01_22/FastAPI/
         run: |
           make install
       
-      - name: Install pyinstall
-        run: |
-          pip install pytest          
+#       - name: Install pyinstall
+#         working-directory: ./Project_01_22/FastAPI/
+#         run: |
+#           pip install pytest          
           
       - name: Lint with pylint
+        working-directory: ./Project_01_22/FastAPI/
         run: |
           make lint
-      - name: Test with pytest
+#       - name: Test with pytest
+#         run: |
+#           make test
+      - name: Format code
         run: |
-          make test
-      #- name: Format code
-       # run: |
-       #   make format
+          make format
