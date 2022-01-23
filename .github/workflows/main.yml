@@ -21,17 +21,17 @@ jobs:
         with:
           python-version: 3.9
       - name: Install dependencies
-        working-directory: ./Project_01_22/FastAPI/
+        working-directory: FastAPI/
         run: |
           make install
       
 #       - name: Install pyinstall
-#         working-directory: ./Project_01_22/FastAPI/
+#         working-directory: FastAPI/
 #         run: |
 #           pip install pytest          
           
       - name: Lint with pylint
-        working-directory: ./Project_01_22/FastAPI/
+        working-directory: FastAPI/
         run: |
           make lint
 #       - name: Test with pytest
