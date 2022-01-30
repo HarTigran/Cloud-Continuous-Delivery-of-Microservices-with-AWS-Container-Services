@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - $(aws ecr get-login --no-include-email --region us-east-1)
+  build:
+    commands:
+      - docker build -t streamlit ./streamlit
+      - docker tag streamlit:latest 118600533013.dkr.ecr.us-east-1.amazonaws.com/streamlit:latest
+      - docker build -t fastapi ./FastAPI
+      - docker tag fastapi:latest 118600533013.dkr.ecr.us-east-1.amazonaws.com/fastapi:latest
+  post_build:
+    commands:
+      - docker push 118600533013.dkr.ecr.us-east-1.amazonaws.com/streamlit:latest
+      - docker push 118600533013.dkr.ecr.us-east-1.amazonaws.com/fastapi:latest
+      - printf '[{"name":"streamlit","imageUri":"%s"}]' 118600533013.dkr.ecr.us-east-1.amazonaws.com/streamlit > imagedefinitions.json
+      - printf '[{"name":"fastapi","imageUri":"%s"}]' 118600533013.dkr.ecr.us-east-1.amazonaws.com/fastapi > imagedefinitions.json
+artifacts:
+  files: imagedefinitions.json
