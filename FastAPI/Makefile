@@ -21,6 +21,6 @@ lint:
 	pylint --disable=R,C,W0622 main.py
 	
 test:
-	pytest main.py
+	pytest main-test.py
 
 all: install lint test
