@@ -25,18 +25,23 @@ jobs:
         run: |
           make install
       
-#       - name: Install pyinstall
-#         working-directory: FastAPI/
-#         run: |
-#           pip install pytest          
+      - name: Install pyinstall
+        working-directory: FastAPI/
+        run: |
+          pip install pytest          
           
-#       - name: Lint with pylint
-#         working-directory: FastAPI/
-#         run: |
-#           make lint
-#       - name: Test with pytest
-#         run: |
-#           make test
+      - name: Lint with pylint
+        working-directory: FastAPI/
+        run: |
+          make lint
+      - name: Lint with pylint streamlit
+        working-directory: streamlit/
+        run: |
+          make lint
+          
+      - name: Test with pytest
+        run: |
+          make test
 #       - name: Format code
 #         run: |
 #           make format
