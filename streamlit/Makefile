@@ -12,6 +12,6 @@ run:
 	python UI_app.py
 
 lint:
-	pylint --disable=R,C main.py
+	pylint --disable=R,C,W0622,E0401 main.py
 
 all: install lint test
