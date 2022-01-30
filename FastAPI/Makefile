@@ -19,5 +19,8 @@ killweb:
 
 lint:
 	pylint --disable=R,C,W0622 main.py
+	
+test:
+	pytest main.py
 
 all: install lint test
