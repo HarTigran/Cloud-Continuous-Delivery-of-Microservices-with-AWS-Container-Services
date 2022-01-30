@@ -1,4 +1,4 @@
-# Project_01_22
+# Cloud Continuous Delivery of Microservice
 
 [![Python application test with Github Actions](https://github.com/HarTigran/Project_01_22/actions/workflows/main.yml/badge.svg)](https://github.com/HarTigran/Project_01_22/actions/workflows/main.yml)
 
