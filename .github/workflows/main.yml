@@ -40,6 +40,7 @@ jobs:
           make lint
           
       - name: Test with pytest
+        working-directory: FastAPI/
         run: |
           make test
 #       - name: Format code
