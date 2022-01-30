@@ -1,6 +1,8 @@
 # Project_01_22
 
-!['Architecture'](https://raw.githubusercontent.com/HarTigran/Project_01_22/main/Arch.jpg?token=GHSAT0AAAAAABRAMLYAXXUXXSFSIOLFRQ2YYPW6BCQ)
+[![Python application test with Github Actions](https://github.com/HarTigran/Project_01_22/actions/workflows/main.yml/badge.svg)](https://github.com/HarTigran/Project_01_22/actions/workflows/main.yml)
+
+!['Architecture'](https://github.com/HarTigran/Project_01_22/blob/main/Arch.jpg)
 
 
 This is a project to demonstrate how applications can be deployed to the cloud using:
