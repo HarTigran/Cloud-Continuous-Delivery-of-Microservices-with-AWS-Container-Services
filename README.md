@@ -1,7 +1,6 @@
 # Project_01_22
 
-
-!['Architecture'](https://raw.githubusercontent.com/HarTigran/Project_01_22/main/Arch.jpg?token=GHSAT0AAAAAABRAMLYAEBVYWXLEYA72PCDAYPWOXQA)
+!['Architecture'](https://raw.githubusercontent.com/HarTigran/Project_01_22/main/Arch.jpg?token=GHSAT0AAAAAABRAMLYAXXUXXSFSIOLFRQ2YYPW6BCQ)
 
 
 This is a project to demonstrate how applications can be deployed to the cloud using:
