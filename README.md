@@ -2,6 +2,8 @@
 
 [![Python application test with Github Actions](https://github.com/HarTigran/Project_01_22/actions/workflows/main.yml/badge.svg)](https://github.com/HarTigran/Project_01_22/actions/workflows/main.yml)
 
+['Application Link'](http://project-01-022-1970945066.us-east-1.elb.amazonaws.com/) : "http://project-01-022-1970945066.us-east-1.elb.amazonaws.com/"
+
 !['Architecture'](https://github.com/HarTigran/Project_01_22/blob/main/Arch.jpg)
 
 
