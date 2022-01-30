@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  fastapi:
+    build: FastAPI/
+    ports: 
+      - 8000:8000
+    networks:
+      - deploy_network
+    container_name: 291036663532.dkr.ecr.us-east-1.amazonaws.com/project_01_22_fastapi:latest
+
+  streamlit:
+    build: Streamlit/
+    depends_on:
+      - FastAPI
+    ports: 
+        - 8501:8501
+    networks:
+      - deploy_network
+    container_name: 291036663532.dkr.ecr.us-east-1.amazonaws.com/project_01_22_streamlit
+
+networks:
+  deploy_network:
+    driver: bridge
