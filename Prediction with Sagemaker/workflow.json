@@ -1,0 +1,110 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template for AWS Step Functions - State Machine
+Resources:
+  StateMachineComponent:
+    Type: AWS::StepFunctions::StateMachine
+    Properties:
+      StateMachineName: MyTrainTransformDeploy_v1-06-08-14-50
+      DefinitionString: |-
+        {
+          "StartAt": "Train Step",
+          "States": {
+            "Train Step": {
+              "Resource": "arn:aws:states:::sagemaker:createTrainingJob.sync",
+              "Parameters": {
+                "AlgorithmSpecification": {
+                  "TrainingImage": "522234722520.dkr.ecr.us-east-1.amazonaws.com/forecasting-deepar:1",
+                  "TrainingInputMode": "File"
+                },
+                "OutputDataConfig": {
+                  "S3OutputPath": "s3://sagemaker-us-east-1-118600533013/bitcoin-notebook/output"
+                },
+                "StoppingCondition": {
+                  "MaxRuntimeInSeconds": 86400
+                },
+                "ResourceConfig": {
+                  "InstanceCount": 1,
+                  "InstanceType": "ml.c4.2xlarge",
+                  "VolumeSizeInGB": 30
+                },
+                "RoleArn": "arn:aws:iam::118600533013:role/service-role/AmazonSageMaker-ExecutionRole-20220205T005794",
+                "InputDataConfig": [
+                  {
+                    "DataSource": {
+                      "S3DataSource": {
+                        "S3DataType": "S3Prefix",
+                        "S3Uri": "s3://sagemaker-us-east-1-118600533013/bitcoin-notebook/data/train/",
+                        "S3DataDistributionType": "FullyReplicated"
+                      }
+                    },
+                    "ChannelName": "train"
+                  },
+                  {
+                    "DataSource": {
+                      "S3DataSource": {
+                        "S3DataType": "S3Prefix",
+                        "S3Uri": "s3://sagemaker-us-east-1-118600533013/bitcoin-notebook/data/test/",
+                        "S3DataDistributionType": "FullyReplicated"
+                      }
+                    },
+                    "ChannelName": "test"
+                  }
+                ],
+                "HyperParameters": {
+                  "time_freq": "1D",
+                  "epochs": "400",
+                  "early_stopping_patience": "40",
+                  "mini_batch_size": "64",
+                  "learning_rate": "5E-4",
+                  "context_length": "7",
+                  "prediction_length": "7"
+                },
+                "TrainingJobName.$": "$$.Execution.Input['JobName']"
+              },
+              "Type": "Task",
+              "Next": "Save model"
+            },
+            "Save model": {
+              "Parameters": {
+                "ExecutionRoleArn": "arn:aws:iam::118600533013:role/service-role/AmazonSageMaker-ExecutionRole-20220205T005794",
+                "ModelName.$": "$$.Execution.Input['ModelName']",
+                "PrimaryContainer": {
+                  "Environment": {},
+                  "Image": "522234722520.dkr.ecr.us-east-1.amazonaws.com/forecasting-deepar:1",
+                  "ModelDataUrl.$": "$['ModelArtifacts']['S3ModelArtifacts']"
+                }
+              },
+              "Resource": "arn:aws:states:::sagemaker:createModel",
+              "Type": "Task",
+              "Next": "Transform Input Dataset"
+            },
+            "Transform Input Dataset": {
+              "Resource": "arn:aws:states:::sagemaker:createTransformJob.sync",
+              "Parameters": {
+                "TransformJobName.$": "$$.Execution.Input['JobName']",
+                "ModelName.$": "$$.Execution.Input['ModelName']",
+                "TransformInput": {
+                  "DataSource": {
+                    "S3DataSource": {
+                      "S3DataType": "S3Prefix",
+                      "S3Uri": "s3://sagemaker-us-east-1-118600533013/bitcoin-notebook/data/test"
+                    }
+                  },
+                  "SplitType": "Line"
+                },
+                "TransformOutput": {
+                  "S3OutputPath": "s3://sagemaker-us-east-1-118600533013/bitcoin-notebook/data/batch-prediction",
+                  "AssembleWith": "Line"
+                },
+                "TransformResources": {
+                  "InstanceCount": 1,
+                  "InstanceType": "ml.m5.large"
+                },
+                "BatchStrategy": "MultiRecord"
+              },
+              "Type": "Task",
+              "End": true
+            }
+          }
+        }
+      RoleArn: arn:aws:iam::118600533013:role/StepFunctionsWorkflowExecutionRole
