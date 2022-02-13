@@ -5,7 +5,18 @@ import time
 import pandas as pd
 import json
 import plotly.express as px
-#import cufflinks as cf
+import boto3
+import gzip
+
+s3 = boto3.resource("s3")
+obj = s3.Object("sagemaker-us-east-1-118600533013", "bitcoin-notebook/output/regression-dd3c9070872411ec9ce40a5f9c26874b1/output/model.tar.gz")
+with gzip.GzipFile(fileobj=obj.get()["Body"]) as gzipfile:
+    content = gzipfile.read()
+st.sidebar.subheader('content')
+
+
+
+today = datetime.date.today()
 
 # construct UI layout
 
@@ -13,10 +24,11 @@ st.sidebar.subheader('Query parameters')
 
 # Date Time
 
+
 start_date = st.sidebar.date_input("Start date", datetime.date(2022, 1, 1))
 from_date = time.mktime(start_date.timetuple())
 
-end_date = st.sidebar.date_input("End date", datetime.date(2022, 1, 31))
+end_date = st.sidebar.date_input("End date", datetime.date.today())
 to_date= time.mktime(end_date.timetuple())
 
 # Coin Id
