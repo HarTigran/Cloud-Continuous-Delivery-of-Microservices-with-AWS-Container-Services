@@ -1,4 +1,4 @@
-# Cloud Continuous Delivery of Microservice
+# Cloud Continuous Delivery of Microservices with AWS Container Services
 
 [![Python application test with Github Actions](https://github.com/HarTigran/Project_01_22/actions/workflows/main.yml/badge.svg)](https://github.com/HarTigran/Project_01_22/actions/workflows/main.yml)
 
