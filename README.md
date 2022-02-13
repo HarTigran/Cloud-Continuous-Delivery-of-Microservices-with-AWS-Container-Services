@@ -4,7 +4,7 @@
 
 ['Application Link'](http://project-01-022-1970945066.us-east-1.elb.amazonaws.com/) : "http://project-01-022-1970945066.us-east-1.elb.amazonaws.com/"
 
-!['Architecture'](https://github.com/HarTigran/Project_01_22/blob/main/Arch.jpg)
+![Architecture](https://user-images.githubusercontent.com/22479437/153740406-7c839227-fa68-4e6b-8180-583d20eb37fb.png)
 
 
 This is a project to demonstrate how applications can be deployed to the cloud using:
