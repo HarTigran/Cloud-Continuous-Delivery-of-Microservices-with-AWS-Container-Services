@@ -11,9 +11,14 @@ This is a project to demonstrate how applications can be deployed to the cloud u
 
 - Codebuild: continuous integration/continuous deployment (ci/cd) 
 - Github action: continuous integration/continuous deployment (ci/cd) 
-- Docker: Cluster Arkostration
+- Docker: Cluster Services
 - Microservices: Back-End, Front-End
 - FastAPI: Retrieve data from remote websites
+- AWS SageMaker --> DEEPAR --> Batch transform(BitCoin Prcie prediction)
+- Step Function Workflow
+- Event Bridge
+- Lambda Function --> Collect Data
+- CloudWatch Event
 
 
 
