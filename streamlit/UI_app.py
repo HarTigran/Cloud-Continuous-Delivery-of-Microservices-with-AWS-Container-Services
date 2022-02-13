@@ -6,13 +6,16 @@ import pandas as pd
 import json
 import plotly.express as px
 import boto3
-import gzip
 
-s3 = boto3.resource("s3")
-obj = s3.Object("sagemaker-us-east-1-118600533013", "bitcoin-notebook/output/regression-dd3c9070872411ec9ce40a5f9c26874b1/output/model.tar.gz")
-with gzip.GzipFile(fileobj=obj.get()["Body"]) as gzipfile:
-    content = gzipfile.read()
-st.sidebar.subheader('content')
+client = boto3.client('s3')
+result = client.get_object(Bucket="sagemaker-us-east-1-118600533013", Key="bitcoin-notebook/data/batch-prediction/test.json.out") 
+csvcontent = result['Body'].read().decode('utf-8')
+data = csvcontent.split("}")
+d = data[0]+'}}'
+e = data[2]+'}}'
+bit_mean = json.loads(d)['mean']
+ev_mean = json.loads(e)['mean']
+
 
 
 
@@ -53,6 +56,14 @@ df = pd.DataFrame.from_dict(data["Bitcoint_price"])
 df.columns = ['Date_Time', 'Price']
 df['Date_Time'] = pd.to_datetime(df['Date_Time'], unit='ms')
 
+# Prediction
+today = datetime.date.today()
+date_pred = [today + datetime.timedelta(days=i) for i in range(1,8)]
+
+df_pred = pd.DataFrame(date_pred, columns=['Date_Time'])
+
+#df_pred['Ethereum'] = ev_mean
+
 # # Bollinger bands
 # st.header('**Bollinger Bands**')
 # qf=cf.QuantFig(df,title='First Quant Figure',legend='top',name='GS')
@@ -60,11 +71,22 @@ df['Date_Time'] = pd.to_datetime(df['Date_Time'], unit='ms')
 # fig = qf.iplot(asFigure=True)
 # st.plotly_chart(fig)
 
-# Display Plot
-
-st.header('**Trend**')
-fig = px.line(df, x='Date_Time', y='Price')
-st.write(fig)
+if id == 'bitcoin':
+    df_pred['Price'] = bit_mean
+    df_long = df.append(df_pred, ignore_index=True)
+    st.header('**Bitcoin Price Prediction for The Next 7 Days**')
+    fig = px.line(df_long, x='Date_Time', y='Price')
+    st.write(fig)
+elif id == 'ethereum':
+    df_pred['Price'] = ev_mean
+    df_long = df.append(df_pred, ignore_index=True)
+    st.header('**Ethereum Price Prediction for The Next 7 Days**')
+    fig = px.line(df_long, x='Date_Time', y='Price')
+    st.write(fig)
+else: 
+    st.header('**Price Trend for {}**'.format(id))
+    fig = px.line(df, x='Date_Time', y='Price')
+    st.write(fig)
 
 # Display Data Table
 
